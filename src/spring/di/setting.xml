@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+	
+	<context:annotation-config /> <!-- autowired를 읽기위해 -->
+	<!-- Exam exam = new NewlecExam(); -->
+	<bean id="exam1" class="spring.di.entity.NewlecExam" p:kor="1" p:eng="1"/>
+	<bean id="exam2" class="spring.di.entity.NewlecExam">
+	
+	<!-- 인자 setter -->
+		<!-- 	
+		<property name="kor" value="20"/>
+		<property name="eng" value="50"/>
+		<property name="math" value="80"/>
+		<property name="com" value="80"/> 
+		-->
+
+	 		
+	<!-- 생성자에 인자를 하나씩 -->
+	<!--
+		<constructor-arg value="10"/>
+		<constructor-arg value="10"/>
+		<constructor-arg value="10"/>
+		<constructor-arg value="10"/>
+ 	-->
+		
+	<!-- 생성자에 인자를 하나씩, 순서를 지정해서 -->
+	<!-- 
+		<constructor-arg index="0" value="10"/>
+		<constructor-arg index="1" value="10"/>
+		<constructor-arg index="2" value="10"/>
+		<constructor-arg index="3" value="10"/>
+	 -->		
+		
+	<!-- 이름을 지정해서 -->
+	<!-- 이름을 지정해도 실제 변수이름과 무관하게 순서대로 들어감 -->
+	<!-- 
+		<constructor-arg name="kor" value="10"/>
+		<constructor-arg name="com" value="20"/>
+		<constructor-arg name="math" value="30"/>
+		<constructor-arg name="eng" value="40"/>
+	 -->
+		
+	<!-- 타입을 지정할 수도 있음 -->
+	<!-- 근데 그건 인터페이스도 맞아야함 -->
+	<!-- 
+		<constructor-arg name="kor" type="float" value="10"/>
+		<constructor-arg name="eng" type="float" value="10"/>
+		<constructor-arg name="math" type="float" value="10"/>
+		<constructor-arg name="com" type="float" value="10"/>
+	-->
+
+
+	</bean>
+	
+	<bean id="oExam" class="spring.di.entity.OldlecExam" p:kor="10" p:eng="10"/>
+	
+	
+	<!-- ExamConsole console = new InlineExamConsole(); -->
+	<bean id="console" class="spring.di.ui.InlineExamConsole">
+		<!-- console.setExam(exam); -->
+		<!-- <property name="exam" ref="exam"/> -->
+	</bean>
+	
+	<bean id="oConsole" class="spring.di.ui.InlineExamConsole">
+		<!-- console.setExam(exam); -->
+		<property name="exam" ref="oExam"/>
+	</bean>
+	
+	
+	<util:list id="exams" list-class="java.util.ArrayList">
+		<bean class="spring.di.entity.OldlecExam" p:kor="1" p:eng="1" p:math="1" p:com="1"/>
+		<ref bean="exam1"/>
+	</util:list>
+	
+<!-- 	<bean id="exams" class="java.util.ArrayList">
+		<constructor-arg>
+			<list>
+				<bean class="spring.di.entity.OldlecExam" p:kor="1" p:eng="1" p:math="1" p:com="1"/>
+				<ref bean="exam"/>
+			</list>
+		</constructor-arg>	
+	</bean> -->
+
+</beans>
